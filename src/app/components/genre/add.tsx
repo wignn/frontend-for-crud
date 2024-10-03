@@ -13,8 +13,10 @@ const CreateGenreForm: React.FC = () => {
   });
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
     if (!genre.name.trim()) {
       setError("Genre name cannot be empty");
@@ -34,6 +36,7 @@ const CreateGenreForm: React.FC = () => {
       setTimeout(() => {
         setError("");
         setSuccess("");
+        setLoading(false);
       }, 5000);
     }
   };
@@ -51,9 +54,9 @@ const CreateGenreForm: React.FC = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-full max-w-md"
+        className="bg-gray-200 p-6 rounded shadow-md w-full max-w-md"
       >
-        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-700">
+        <h2 className="text-2xl font-semibold text-center mb-6 text-purple-700">
           Create Genre
         </h2>
 
@@ -66,7 +69,7 @@ const CreateGenreForm: React.FC = () => {
             name="name"
             value={genre.name}
             onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-400"
             type="text"
             placeholder="Enter genre name"
           />
@@ -74,7 +77,7 @@ const CreateGenreForm: React.FC = () => {
 
         <button
           type="submit"
-          className="w-full p-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          className="w-full p-3 border border-blue-500 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
         >
           Submit
         </button>
@@ -86,6 +89,6 @@ const CreateGenreForm: React.FC = () => {
       </form>
     </div>
   );
-}
+};
 
 export default CreateGenreForm;
