@@ -13,8 +13,11 @@ interface Form {
 interface FileUrls {
   url: string;
 }
+interface BookCreateProps {
+  className?: string; 
+}
 
-const BookCreate: React.FC = ({ className }: any) => {
+const BookCreate: React.FC<BookCreateProps> = ({ className }) => {
   const [form, setForm] = useState<Form>({
     title: "",
     author: "",
