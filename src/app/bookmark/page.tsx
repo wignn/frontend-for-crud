@@ -19,8 +19,10 @@ interface Bookmark {
   };
 }
 
+
+
 const BookMark: React.FC = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession() as { data: CustomSession | null; status: string };
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const [loading, setLoading] = useState(true);
 

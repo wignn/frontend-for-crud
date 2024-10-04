@@ -1,8 +1,27 @@
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: number; 
+      name: string | null;
+      email: string | null;
+      image?: string | null;
+    };
+  }
+}
+
 import bcrypt from "bcrypt";
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import axios from "axios";
-import {API} from './Api'
+import { API } from "./Api";
+
+interface User {
+  id: number;
+  email: string;
+  name: string;
+  password: string;
+}
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -25,8 +44,9 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials.password) return null;
 
         const { data: users } = await axios.get(`${API}/users/data`);
-
-        const user = users.find((user: any) => user.email === credentials.email);
+        const user = users.find(
+          (user: User) => user.email === credentials.email
+        );
 
         if (!user) return null;
 
@@ -40,7 +60,6 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           email: user.email,
           name: user.name,
-          // createdAt: user.createdAt,
         };
       },
     }),
@@ -48,24 +67,19 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        return {
-          ...token,
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          // createdAt: user.createdAt,
-        };
+        token.id = user.id;
       }
       return token;
     },
     session({ session, token }) {
+      session.user.id = Number(token.id)
       return {
         ...session,
         user: {
           ...session.user,
-          id: token.id,
+          id: token.id, 
           name: token.name,
-          // createdAt: token.createdAt,
+          email: token.email,
         },
       };
     },
