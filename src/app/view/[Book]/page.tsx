@@ -12,6 +12,7 @@ import Navbar from "@/app/components/Landing/Navbar";
 import { AddBookmark } from "@/app/components/btn/bookbtn";
 import { DeleteButton } from "@/app/components/btn/bookbtn";
 import { number } from "zod";
+import { getBookById, isMark } from "@/lib/action";
 
 interface Book {
   id: string;
@@ -38,9 +39,10 @@ const BookDetails = () => {
 
   const fetchData = async () => {
     try {
-      const bookResponse = await axios.get(`${API}/books/${bookId}`);
+      console.log(bookId, API)
+      const bookResponse = await getBookById(String(bookId))
       setBook(bookResponse.data);
-      const isMarkResponse = await axios.get(`${API}/isMark/${userId}/${bookId}`);
+      const isMarkResponse = await isMark(userId, String(bookId))
       setIsBookmarked(isMarkResponse.data);
       setShowButton(isMarkResponse.data); 
     } catch (error) {

@@ -1,3 +1,4 @@
+
 import axios from "axios";
 
 export const API = "https://rest-api-for-crud-production.up.railway.app";
@@ -162,7 +163,7 @@ export const genreCreate = async (genre: any) => {
 // Fungsi untuk mendapatkan bookmark pengguna
 export const getBookMark = async (userId: any) => {
   try {
-    const response = await axios.get(`${API}/bookmark/${userId}`);
+    const response = await axios.get(`${API}/bookmarsk/${userId}`);
     return response;
   } catch (err) {
     throw new Error("Failed to get bookmarks");
@@ -298,3 +299,12 @@ export const emailSend = async (formData: any) => {
     throw new Error("Failed to send email.");
   }
 };
+
+export const isMark = async(userId:any, bookId:string)=>{
+  try {
+    const result = await axios.get(`${API}/isMark/${userId}/${bookId}`);
+    return result;
+  }catch(err){
+    throw new Error("Failed to mark book");
+  }
+}
