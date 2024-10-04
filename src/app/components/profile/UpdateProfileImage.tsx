@@ -1,13 +1,17 @@
 
+//@ts-nocheck
 "use client";
 
 import { useEdgeStore } from "@/lib/edgeStore";
 import React, { useEffect, useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "@/lib/cropImage";
+import axios from "axios";
 import { useSession } from "next-auth/react";
+import { API } from "@/lib/Api";
 import { useRouter } from 'next/navigation';
 import { postCover, postProfile } from "@/lib/action";
+import { Bg } from "../dist/bg";
 
 interface FileUrls {
   url: string;
@@ -23,7 +27,7 @@ export const UpdateAvatar:React.FC = () => {
   const [avatarCrop, setAvatarCrop] = useState({ x: 0, y: 0 });
   const [avatarZoom, setAvatarZoom] = useState(1);
   const [avatarCroppedAreaPixels, setAvatarCroppedAreaPixels] = useState<any>(null);
-  const [avatarPreview, setAvatarPreview] = useState<any>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const router = useRouter();
   const uploadUrlToDatabase = async () => {
     if (avatarUrl) {
@@ -78,7 +82,8 @@ export const UpdateAvatar:React.FC = () => {
   );
 
   return (
-    <div className=" flex  justify-center">
+    <div className=" flex h-auto bg-transparent justify-center">
+
       <div className="min-h-full flex flex-col p-8 dark:bg-gray-800 shadow-lg rounded-lg max-w-lg w-full mx-auto">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 text-center">Upload Avatar</h1>
         <div className="w-full mb-8">

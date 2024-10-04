@@ -36,7 +36,7 @@ const PhotoCard: FC<PhotoCardProps> = ({ id, name, photoURL, coverURL }) => {
           <div className="flex justify-center mt-4 space-x-3">
             <Link href={"/profile/setting"}>
             <button className="bg-gray-200 text-gray-700 flex items-center text-sm font-semibold py-2 px-4 rounded-full hover:bg-gray-300 transition-colors">
-              <IoSettingsOutline className="mr-2" /> Message
+              <IoSettingsOutline className="mr-2" /> setting
             </button>
             </Link>
 

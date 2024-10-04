@@ -7,7 +7,7 @@ export default function Page() {
     <>
       <Bg />
       <div className="relative z-10">
-        <div className="">
+        <div className="pb-4">
           <UpdateCover />
         </div>
       </div>

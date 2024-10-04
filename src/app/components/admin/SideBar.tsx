@@ -52,6 +52,11 @@ const Sidebar: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
                 Tambah Genre
               </li>
             </Link>
+            <Link href="/Book/genreCreate" passHref>
+              <li className="p-4 hover:bg-gray-800 text-white cursor-pointer rounded-md transition-colors">
+                Tambah Genre
+              </li>
+            </Link>
           </ul>
         </nav>
       </aside>
