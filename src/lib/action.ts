@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const API = "https://rest-api-for-crud-production.up.railway.app"
+export const API = "https://rest-api-for-crud-production.up.railway.app";
+
 // Fungsi untuk mengambil buku
 export const fetchBooks = async () => {
   try {
@@ -42,26 +43,27 @@ export const resetPassword = async (newPassword: string, token: string) => {
   }
 };
 
-
-// Fungsi uuntuk mengirim token
+// Fungsi untuk mengirim token
 export const sendToken = async (email: string) => {
   try {
     const result = await axios.post(`${API}/token/email`, { email });
     return result;
   } catch (err) {
-    throw new Error("Failed to send main");
+    throw new Error("Failed to send email");
   }
 };
 
-export const GetAllUser = async()=>{
+// Fungsi untuk mendapatkan semua pengguna
+export const GetAllUser = async () => {
   try {
     const response = await axios.get(`${API}/users/data`);
     return response;
   } catch (error) {
-    throw new Error("Failed to send main");
+    throw new Error("Failed to get users");
   }
-}
+};
 
+// Fungsi untuk registrasi pengguna
 export const register = async (formData: {
   name: string;
   email: string;
@@ -75,7 +77,31 @@ export const register = async (formData: {
   }
 };
 
-//get profile
+// Fungsi untuk menambahkan pengguna baru
+export const addUser = async (formData: {
+  name: string;
+  email: string;
+  password: string;
+}) => {
+  try {
+    const response = await axios.post(`${API}/users/create`, formData);
+    return response;
+  } catch (err) {
+    throw new Error("Failed to add user");
+  }
+};
+
+// Fungsi untuk menghapus pengguna
+export const deleteUser = async (userId: number) => {
+  try {
+    const result = await axios.delete(`${API}/users/${userId}`);
+    return result;
+  } catch (err) {
+    throw new Error("Failed to delete user");
+  }
+};
+
+// Fungsi untuk mendapatkan profil pengguna
 export const getProfile = async (userId: number) => {
   try {
     const result = await axios.get(`${API}/users/${userId}`);
@@ -84,12 +110,13 @@ export const getProfile = async (userId: number) => {
     throw new Error("Failed to get profile");
   }
 };
-//post profile
+
+// Fungsi untuk memperbarui profil
 export const postProfile = async ({
   Id,
   avatar,
 }: {
-  Id: number;
+  Id: any;
   avatar: string;
 }) => {
   try {
@@ -103,7 +130,7 @@ export const postProfile = async ({
   }
 };
 
-//update cover seperti di atas
+// Fungsi untuk memperbarui cover
 export const postCover = async ({
   Id,
   coverUrl,
@@ -122,78 +149,82 @@ export const postCover = async ({
   }
 };
 
-export const genreCreate =async (genre:any)=>{
+// Fungsi untuk membuat genre
+export const genreCreate = async (genre: any) => {
   try {
-      const response = await axios.post(`${API}/genre/create`, genre);
-      return response
-  }catch(err){
+    const response = await axios.post(`${API}/genre/create`, genre);
+    return response;
+  } catch (err) {
+    throw new Error("Failed to create genre");
   }
-}
+};
 
-export const getBookMark = async (userId:any)=>{
+// Fungsi untuk mendapatkan bookmark pengguna
+export const getBookMark = async (userId: any) => {
   try {
-          const response = await axios.get(`${API}/bookmarsk/${userId}`);
-          return response
-  }catch(err){
-       throw new Error("Failed to update cover");
+    const response = await axios.get(`${API}/bookmark/${userId}`);
+    return response;
+  } catch (err) {
+    throw new Error("Failed to get bookmarks");
   }
-}
+};
 
-export const chapterCreat =async (form:any) =>{
+// Fungsi untuk membuat chapter
+export const chapterCreat = async (form: any) => {
   try {
-    console.log(form)
-      const response = await axios.post(`${API}/chapters/create`, form);
-      return response;
-  }catch(err){
-    throw new Error("Failed to update cover");
+    const response = await axios.post(`${API}/chapters/create`, form);
+    return response;
+  } catch (err) {
+    throw new Error("Failed to create chapter");
   }
-}
+};
 
-
-//bookMarkDelet
-export const deleteBookMark = async (userId:any, bookId:any) => {
+// Fungsi untuk menghapus bookmark
+export const deleteBookMark = async (userId: any, bookId: any) => {
   try {
-   const result = await axios.delete(`${API}/bookmark/delete/${userId}/${bookId}`);
+    const result = await axios.delete(`${API}/bookmark/delete/${userId}/${bookId}`);
     return result;
-  }catch(err){
-    throw new Error("Failed to delete bookMark");
+  } catch (err) {
+    throw new Error("Failed to delete bookmark");
   }
-}
+};
 
-//
-export const bookMarkConect =async (userId:any, bookId:any)=>{
-  try{
+// Fungsi untuk menghubungkan bookmark
+export const bookMarkConect = async (userId: any, bookId: any) => {
+  try {
     const response = await axios.post(`${API}/bookmark/create`, { userId, bookId });
-  }catch(err){
-
+    return response;
+  } catch (err) {
+    throw new Error("Failed to connect bookmark");
   }
-  
-}
+};
 
-export const getBookById = async (bookId:string)=>{
-  try{
-    const result = await axios.get(`${API}/books/${bookId}`)
-return result
-  }catch(err){
-    throw new Error("Failed to get book")
+// Fungsi untuk mendapatkan buku berdasarkan ID
+export const getBookById = async (bookId: string) => {
+  try {
+    const result = await axios.get(`${API}/books/${bookId}`);
+    return result;
+  } catch (err) {
+    throw new Error("Failed to get book");
   }
-}
+};
 
-export const getAllGenre = async()=>{
+// Fungsi untuk mendapatkan semua genre
+export const getAllGenre = async () => {
   try {
     const result = await axios.get(`${API}/genres`);
-    return result
+    return result;
   } catch (error) {
-    throw new Error("Failed to get genre")
+    throw new Error("Failed to get genres");
   }
-}
+};
 
-
+// Fungsi untuk menghubungkan genre dengan buku
 export const genreConect = async (bookId: string, selectedGenreIds: any) => {
   try {
     const result = await axios.post(`${API}/genre/conect`, {
       bookId,
-      genreIds: Array.from(selectedGenreIds), 
+      genreIds: Array.from(selectedGenreIds),
     });
     return result;
   } catch (error) {
@@ -201,6 +232,7 @@ export const genreConect = async (bookId: string, selectedGenreIds: any) => {
   }
 };
 
+// Fungsi untuk menghapus chapter
 export const deletChapter = async (chapterId: string) => {
   try {
     const result = await axios.delete(`${API}/chapter/delete`, { data: { chapterId } });
@@ -210,29 +242,32 @@ export const deletChapter = async (chapterId: string) => {
   }
 };
 
-export const deletGenre =async (bookId:any, genreId:any)=>{
-  try{
-    console.log(bookId, genreId)
+// Fungsi untuk menghapus genre
+export const deletGenre = async (bookId: any, genreId: any) => {
+  try {
     await axios.put(`${API}/genre/disconect`, {
-      bookId, genreId ,
-   });
-  }catch(err){
-    throw new Error("Failed to add genres.");
+      bookId,
+      genreId,
+    });
+  } catch (err) {
+    throw new Error("Failed to delete genre.");
   }
-}
+};
 
-export const PostBook =async (form:any, imageUrl:any)=>{
-  try{
+// Fungsi untuk menambahkan buku
+export const PostBook = async (form: any, imageUrl: any) => {
+  try {
     const uploadBook = await axios.post(`${API}/book/Create`, {
       ...form,
-      imageUrl
+      imageUrl,
     });
     return uploadBook;
-  }catch(err){
-    throw new Error("Failed to add upload.");
+  } catch (err) {
+    throw new Error("Failed to add book.");
   }
-}
+};
 
+// Fungsi untuk mengedit buku
 export const editeBook = async (
   id: string,
   title: string,
@@ -254,17 +289,12 @@ export const editeBook = async (
   }
 };
 
-
-export const emailSend =async (formData:any)=>{
-  try{
+// Fungsi untuk mengirim email
+export const emailSend = async (formData: any) => {
+  try {
     const result = await axios.post(`${API}/mail`, formData);
-    return result
-  }catch(err){
+    return result;
+  } catch (err) {
     throw new Error("Failed to send email.");
   }
-}
-
-
-
-
-
+};

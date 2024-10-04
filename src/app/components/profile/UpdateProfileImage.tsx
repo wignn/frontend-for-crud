@@ -25,7 +25,7 @@ export const UpdateAvatar:React.FC = () => {
   const [avatarCrop, setAvatarCrop] = useState({ x: 0, y: 0 });
   const [avatarZoom, setAvatarZoom] = useState(1);
   const [avatarCroppedAreaPixels, setAvatarCroppedAreaPixels] = useState<any>(null);
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<any>(null);
   const router = useRouter();
   const uploadUrlToDatabase = async () => {
     if (avatarUrl) {
