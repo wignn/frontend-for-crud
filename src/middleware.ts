@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  console.log('Token:', token); 
+  // console.log('Token:', token); 
   const isAuthenticated = !!token;
   const isLoginPage = req.nextUrl.pathname.startsWith("/Login");
   if (isLoginPage && isAuthenticated) {
