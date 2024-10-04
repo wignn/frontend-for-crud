@@ -5,9 +5,7 @@ import { useEdgeStore } from "@/lib/edgeStore";
 import React, { useEffect, useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "@/lib/cropImage";
-import axios from "axios";
 import { useSession } from "next-auth/react";
-import { API } from "@/lib/Api";
 import { useRouter } from 'next/navigation';
 import { postCover, postProfile } from "@/lib/action";
 
