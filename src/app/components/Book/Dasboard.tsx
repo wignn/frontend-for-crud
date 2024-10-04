@@ -41,7 +41,7 @@ const DasboardComponet:React.FC = () => {
   const fetchData = async () => {
     try {
 
-      const bookResponse = await getBookById(bookId);
+      const bookResponse = await getBookById(String(bookId));
       setBook(bookResponse.data);
 
       const genreData =await getAllGenre()
