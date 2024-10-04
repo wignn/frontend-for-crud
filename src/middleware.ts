@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  // console.log('Token:', token); // Log token untuk debugging
+  console.log('Token:', token); 
   const isAuthenticated = !!token;
   const isLoginPage = req.nextUrl.pathname.startsWith("/Login");
   if (isLoginPage && isAuthenticated) {
@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/Login", req.url));
   }
   const AdminDash = req.nextUrl.pathname.startsWith("/admin");
-  if (AdminDash && !isAuthenticated) {
+  if (AdminDash && token?.name !==  "admin" ) {
     const notFoundPath = "/404"; 
     return NextResponse.redirect(new URL(notFoundPath, req.url));
   }
