@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
             <img
               src={user?.profile.avatar ?? '/about.jpg'}
               alt="Avatar"
-              className="h-10 w-10 rounded-full cursor-pointer"
+              className="hidden md:block h-10 w-10 rounded-full cursor-pointer" 
               onClick={() => setDropdownOpen(!dropdownOpen)}
             />
             {dropdownOpen && (
