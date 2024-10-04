@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { EdgeStoreProvider } from "@/lib/edgeStore";
-import ClientWrapper from "./clientWarp"; 
+import ClientWrapper from "./clientWarp";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,7 +19,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "akasia",
   description: "library",
-  icons: "/icon/Error_Symbol2.png" 
+  icons: "/icon/Error_Symbol2.png",
 };
 
 export default function RootLayout({
@@ -28,9 +29,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <ClientWrapper>
-          <EdgeStoreProvider>{children}</EdgeStoreProvider>
+          <EdgeStoreProvider>
+            {children} <SpeedInsights />
+          </EdgeStoreProvider>
         </ClientWrapper>
       </body>
     </html>
