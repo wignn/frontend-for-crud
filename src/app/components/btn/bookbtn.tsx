@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
-import { API } from '@/lib/Api';
 import Link from "next/link";
 import { bookMarkConect, deleteBookMark, getBookMark } from "@/lib/action";
 
@@ -78,12 +77,14 @@ export const ReadButton = ({ id }: { id: string }) => {
   );
 };
 
-export const AddBookmark = ({ bookId, userId, onDelete, className }: { bookId: string; userId: string; onDelete: any, className?: string }) => {
+export const AddBookmark = ({ bookId, onDelete, className }: { bookId: string; onDelete: any, className?: string }) => {
   const [loading, setLoading] = useState(false);
+  const {data:session} = useSession()
+
   const handleAddBookmark = async () => {
     setLoading(true);
     try {
-      await bookMarkConect(userId, bookId)
+      await bookMarkConect(session?.user.id, bookId)
       onDelete();
     } catch (error) {
       console.error("Error adding bookmark:", error);
@@ -106,7 +107,7 @@ export const AddBookmark = ({ bookId, userId, onDelete, className }: { bookId: s
   );
 };
 
-export const DeleteButton = ({ userId, bookId, onDelete, className }: { userId: string; bookId: string; onDelete: any; className?: string }) => {
+export const DeleteButton = ({ bookId, onDelete, className }: { bookId: string; onDelete: any; className?: string }) => {
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession(); 
 

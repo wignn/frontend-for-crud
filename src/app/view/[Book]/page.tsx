@@ -11,6 +11,7 @@ import { API } from "@/lib/Api";
 import Navbar from "@/app/components/Landing/Navbar";
 import { AddBookmark } from "@/app/components/btn/bookbtn";
 import { DeleteButton } from "@/app/components/btn/bookbtn";
+import { number } from "zod";
 
 interface Book {
   id: string;
@@ -114,7 +115,6 @@ const BookDetails = () => {
         <div className={`button-transition flex justify-center h-10 mb-4 ${fadeClass}`}>
           {showButton ? (
             <DeleteButton
-              userId={userId}
               bookId={book.id}
               onDelete={fetchData}
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -122,7 +122,6 @@ const BookDetails = () => {
           ) : (
             <AddBookmark
               bookId={book.id}
-              userId={userId}
               onDelete={fetchData}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             />
