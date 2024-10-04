@@ -21,15 +21,15 @@ interface DashboardProps {
   query: string;
 }
 
-const BooksEdite: React.FC <DashboardProps> =({ query })=> {
+const BooksEdite: React.FC<DashboardProps> = ({ query }) => {
   const [books, setBooks] = useState<Book[]>([]);
-  let genre = "";
-  
+  const genre = ""; // Dapat diperluas untuk mendukung filtering berdasarkan genre
+
   const fetchBooks = async () => {
     const result = await GetDashboard(query, genre);
     setBooks(result);
   };
-  
+
   useEffect(() => {
     fetchBooks();
   }, [query]);
@@ -42,7 +42,7 @@ const BooksEdite: React.FC <DashboardProps> =({ query })=> {
       showCancelButton: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, delete it!',
     });
 
     if (result.isConfirmed) {
@@ -62,7 +62,7 @@ const BooksEdite: React.FC <DashboardProps> =({ query })=> {
       <div className="justify-center flex mb-4">
         <Search />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {books.map((book) => (
           <div
             key={book.id}
@@ -75,24 +75,24 @@ const BooksEdite: React.FC <DashboardProps> =({ query })=> {
                 className="h-40 w-28 sm:h-32 sm:w-24 object-cover rounded-md mb-4"
               />
             )}
-            <h2 className="text-lg font-semibold text-white text-center mb-2">
+            <h2 className="text-lg font-semibold text-white text-center mb-2 line-clamp-2">
               {book.title}
             </h2>
-            <p className="text-gray-300 mb-4 text-sm text-center">{book.author}</p>
-            <div className="flex space-x-2">
+            <p className="text-gray-300 mb-4 text-sm text-center line-clamp-1">{book.author}</p>
+            <div className="flex space-x-2 mt-auto">
               <Link href={`/Book/${book.id}`} passHref>
-                <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-150 transform hover:scale-105">
+                <button className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition duration-150 transform hover:scale-105">
                   <FaEye size={16} />
                 </button>
               </Link>
               <Link href={`/Book/${book.id}/edite`} passHref>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-150 transform hover:scale-105">
+                <button className="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition duration-150 transform hover:scale-105">
                   <FaEdit size={16} />
                 </button>
               </Link>
               <button
                 onClick={() => deleteBook(book.id)} 
-                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-150 transform hover:scale-105"
+                className="bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition duration-150 transform hover:scale-105"
               >
                 <FaTrash size={16} />
               </button>

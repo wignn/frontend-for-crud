@@ -81,7 +81,7 @@ export default function Landing() {
   return (
     <div
       style={{
-        backgroundImage: `url('/bg.jpg')`,
+        backgroundImage: `url('https://files.edgestore.dev/93ti9i3vqygrxg8l/myPublicImage/_public/1a4ec192-9b21-4418-8b96-749ad41f5ddb.jpg')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

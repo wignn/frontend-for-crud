@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { GetDashboard } from "@/lib/action";
 import Search from "../dist/searchBook";
 import Navbar from "./Navbar";
@@ -20,7 +21,7 @@ interface DashboardProps {
   query: string;
 }
 
-const Dashboard:React.FC <DashboardProps> = ({ query })=> {
+const Dashboard: React.FC<DashboardProps> = ({ query }) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [genre, setGenre] = useState("");
 
@@ -38,44 +39,48 @@ const Dashboard:React.FC <DashboardProps> = ({ query })=> {
   const ongoing = totalBooks - borrowedBooks;
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-900 text-gray-200">
       <Navbar />
-      <div className="min-h-screen bg-gray-900 text-gray-200 p-4 sm:p-8">
-        <header className="flex justify-between items-center bg-gray-800 p-4 sm:p-6 rounded-md shadow-lg">
-          <h1 className="text-xl sm:text-2xl font-bold text-white mr-3">
+      <div className="p-4 sm:p-8">
+        <header className="flex justify-between items-center bg-gray-800 p-4 sm:p-6 rounded-md shadow-lg mb-6">
+          <h1 className="text-xl sm:text-2xl font-bold text-white">
             Dashboard
           </h1>
           <Search />
         </header>
+        
         <GenreSelector selectedGenre={genre} onSelect={setGenre} /> 
-        <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6 sm:mt-8 mb-6">
-          <div className="flex-1 bg-gray-800 p-4 sm:p-6 rounded-md shadow-md text-center">
-            <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-4 text-gray-200">
+{/* 
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+          <div className="bg-gray-800 p-6 rounded-md shadow-md text-center">
+            <h2 className="text-lg font-bold mb-2 text-gray-200">
               Total Books
             </h2>
-            <p className="text-2xl sm:text-3xl font-semibold text-white">
+            <p className="text-3xl font-semibold text-white">
               {totalBooks}
             </p>
           </div>
-          <div className="flex-1 bg-gray-800 p-4 sm:p-6 rounded-md shadow-md text-center">
-            <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-4 text-gray-200">
+          <div className="bg-gray-800 p-6 rounded-md shadow-md text-center">
+            <h2 className="text-lg font-bold mb-2 text-gray-200">
               Borrowed Books
             </h2>
-            <p className="text-2xl sm:text-3xl font-semibold text-white">
+            <p className="text-3xl font-semibold text-white">
               {borrowedBooks}
             </p>
           </div>
-          <div className="flex-1 bg-gray-800 p-4 sm:p-6 rounded-md shadow-md text-center">
-            <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-4 text-gray-200">
+          <div className="bg-gray-800 p-6 rounded-md shadow-md text-center">
+            <h2 className="text-lg font-bold mb-2 text-gray-200">
               Available Books
             </h2>
-            <p className="text-2xl sm:text-3xl font-semibold text-white">
+            <p className="text-3xl font-semibold text-white">
               {ongoing}
             </p>
           </div>
-        </div>
+        </div> */}
 
-        <BookList books={books} />
+        <div className="mt-6">
+          <BookList books={books} />
+        </div>
       </div>
     </div>
   );

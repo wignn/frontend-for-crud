@@ -8,8 +8,8 @@ const Hero:React.FC = ()=> {
         <h1 className="md:text-5xl text-base font-bold mb-4 drop-shadow-lg">
           Selamat Datang di tera
         </h1>
-        <p className="md:text-xl text-xs mb-6 drop-shadow-lg">
-          di cari orang yang bisa bantu
+        <p className="md:text-2xl text-sm sm:text-lg mb-6 drop-shadow-lg text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 hover:scale-105 transition-transform duration-300">
+          Next.js + Express
         </p>
         <Link
           href="#features"

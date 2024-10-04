@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
             Novel
           </Link>
           <Link href="/bookmark" className="hover:text-gray-400">
-            BookMark
+          bookmark
           </Link>
         </div>
 

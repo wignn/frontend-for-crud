@@ -68,7 +68,7 @@ const BookMark: React.FC = () => {
       backgroundRepeat: "no-repeat",
       backgroundAttachment: "fixed",
     }}>
-      <div className="bg-opacity-80 backdrop-blur-md w-11/12 sm:w-4/5 md:py-6 md:px-8 py-4 px-4 rounded-lg shadow-lg">
+      <div className="w-11/12 sm:w-4/5 md:py-6 md:px-8 py-4 px-4 rounded-lg shadow-lg">
         <h1 className="text-xl sm:text-3xl font-bold mb-6 text-center text-white">
           Bookmarks
         </h1>

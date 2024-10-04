@@ -11,7 +11,6 @@ const Dash = async ({ searchParams }: { searchParams?: SearchParams }) => {
 
   return (
     <div>
-     
       <Dashboard query={query} /></div>
   );
 };
