@@ -233,6 +233,16 @@ export const genreConect = async (bookId: string, selectedGenreIds: any) => {
   }
 };
 
+
+export const getChapterById = async (chapterId: string) => {
+  try {
+    const result = await axios.get(`${API}/chapter/${chapterId}`);
+    return result;
+  } catch (err) {
+    throw new Error("Failed to get chapter.");
+  }
+};
+
 // Fungsi untuk menghapus chapter
 export const deletChapter = async (chapterId: string) => {
   try {
@@ -242,6 +252,8 @@ export const deletChapter = async (chapterId: string) => {
     throw new Error("Failed to delete chapter.");
   }
 };
+
+
 
 // Fungsi untuk menghapus genre
 export const deletGenre = async (bookId: any, genreId: any) => {

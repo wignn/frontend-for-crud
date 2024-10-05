@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Loading from "@/app/components/dist/Loading";
-import axios from "axios";
-import {API} from '@/lib/Api'
 import Navbar from "@/app/components/Landing/Navbar";
+import { getBookById, getChapterById } from "@/lib/action";
 
 interface Chapter {
   id: string;
@@ -34,29 +33,23 @@ const ChapterContent = () => {
   const router = useRouter();
 
   const pathParts = pathname.split("/").filter((part) => part);
-  const chapterId = pathParts[2]; console.log(chapterId)
+  const chapterId = pathParts[2];
   const bookId = pathParts[1]
 
   useEffect(() => {
     const fetchChapterContent = async () => {
       try {
-        const chapterResponse = await axios.get(
-          `${API}/chapter/${chapterId}`
-        );
-
-        console.log("Chapter Response:", chapterResponse.data);
+        const chapterResponse = await getChapterById(chapterId)
 
         if (!chapterResponse.data || !chapterResponse.data.book) {
           throw new Error("Chapter or associated book not found.");
         }
 
         setContent(chapterResponse.data);
-        const bookResponse = await axios.get(
-          `${API}/books/${bookId}`
-        );
+        const bookResponse = await getBookById(bookId)
         setBook(bookResponse.data);
       } catch (err) {
-        console.error("Gagal memuat konten chapter:", err);
+        console.error("Gagal memuat konten chapter:");
       } finally {
         setLoading(false);
       }
