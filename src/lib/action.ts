@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-export const API = "https://rest-api-for-crud-production.up.railway.app";
+export const API = process.env.NEXT_PUBLIC_API
 
 // Fungsi untuk mengambil buku
 export const fetchBooks = async () => {

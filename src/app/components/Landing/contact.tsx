@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
-import { API } from "@/lib/Api";
 import { emailSend } from "@/lib/action";
 
 interface Email {
@@ -11,7 +9,7 @@ interface Email {
   message: string;
 }
 
-const Contact:React.FC = () => {
+const Contact: React.FC = () => {
   const [formData, setFormData] = useState<Email>({
     fromName: "",
     fromEmail: "",
@@ -20,6 +18,7 @@ const Contact:React.FC = () => {
   });
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
   const [button, setButton] = useState(true);
+  const [isSending, setIsSending] = useState(false);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -32,21 +31,21 @@ const Contact:React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSending(true);
     try {
-      const response = await emailSend(formData)
-      setResponseMessage("Email sent successfully!"); 
+      const response = await emailSend(formData);
+      setResponseMessage("Email sent successfully!");
       console.log("Email sent successfully:", response.data);
-      setFormData({ fromName: "", fromEmail: "", subject: "", message: "" }); 
+      setFormData({ fromName: "", fromEmail: "", subject: "", message: "" });
     } catch (err) {
-      setResponseMessage("Error sending email. Please try again later."); 
+      setResponseMessage("Error sending email. Please try again later.");
       console.error("Error sending email:", err);
     } finally {
-      setButton(false);
+      setIsSending(false)
     }
   };
 
   return (
-
     <section id="contact" className="py-20 mx-2 text-center">
       <div className="container mx-auto">
         <h2 className="text-4xl font-bold mb-6 text-white">Contact Us</h2>
@@ -95,12 +94,8 @@ const Contact:React.FC = () => {
                 onChange={handleChange}
               ></textarea>
             </div>
-            <button
-              disabled={button}
-              type="submit"
-              className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300"
-            >
-              Send Message
+            <button type="submit" disabled={isSending}>
+              {isSending ? "Mengirim..." : "Kirim Email"}
             </button>
           </form>
           {responseMessage && (
@@ -165,6 +160,6 @@ const Contact:React.FC = () => {
       </div>
     </section>
   );
-}
+};
 
 export default Contact;

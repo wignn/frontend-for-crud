@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,54 +13,26 @@ import {
   faArrowRightFromBracket
 } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
-const menuItems = [
-  { icon: faDatabase, color: 'green', path: '/dashboard', label: 'Data' },
-  { icon: faChartBar, color: 'green', path: '/profile', label: 'Profile' },
-  { icon: faUser, color: 'blue', path: '/Login', label: 'Login' },
-  { icon: faCog, color: 'red', path: '/profile/setting', label: 'Settings' },
-  { icon: faArrowRightFromBracket, color: 'red', label: 'Logout', onClick: () => signOut() },
-];
-
-const IconButton = ({
-  icon,
-  color,
-  label,
-  path,
-  onHover,
-  onClick,
-  hovered,
-}:any) => (
-  <div
-    className="relative group"
-    onMouseEnter={() => onHover(label)}
-    onMouseLeave={() => onHover(null)}
-    onClick={onClick}
-  >
-    <div
-      className={`text-xl text-${color}-500 cursor-pointer bg-transparent p-2 rounded-full hover:bg-${color}-100 transition-transform duration-150 ease-in-out transform active:scale-95`}
-      aria-label={label}
-    >
-      <FontAwesomeIcon icon={icon} />
-    </div>
-    {hovered === label && (
-      <span
-        className={`absolute right-12 top-1/2 transform -translate-y-1/2 bg-${color}-500 text-white px-2 py-1 rounded-lg transition-all duration-300`}
-      >
-        {label}
-      </span>
-    )}
-  </div>
-);
-
-const PathWidget:React.FC = () => {
+const PathWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
+  const { data: session } = useSession();  
   const router = useRouter();
+
+  const setingName = session ? "Profile" : "Login";  
 
   const toggleWidget = () => setIsOpen(!isOpen);
   const goToPath = (path: string) => path && router.push(path);
+
+  const menuItems = [
+    { icon: faDatabase, color: 'green', path: '/dashboard', label: 'Data' },
+    { icon: faChartBar, color: 'green', path: '/profile', label: 'Profile' },
+    { icon: faUser, color: 'blue', path: session ? '/profile' : '/Login', label: setingName },
+    { icon: faCog, color: 'red', path: '/profile/setting', label: 'Settings' },
+    { icon: faArrowRightFromBracket, color: 'red', label: 'Logout', onClick: () => signOut() },
+  ];
 
   return (
     <div
@@ -109,5 +82,36 @@ const PathWidget:React.FC = () => {
     </div>
   );
 };
+
+const IconButton = ({
+  icon,
+  color,
+  label,
+  path,
+  onHover,
+  onClick,
+  hovered,
+}: any) => (
+  <div
+    className="relative group"
+    onMouseEnter={() => onHover(label)}
+    onMouseLeave={() => onHover(null)}
+    onClick={onClick}
+  >
+    <div
+      className={`text-xl text-${color}-500 cursor-pointer bg-transparent p-2 rounded-full hover:bg-${color}-100 transition-transform duration-150 ease-in-out transform active:scale-95`}
+      aria-label={label}
+    >
+      <FontAwesomeIcon icon={icon} />
+    </div>
+    {hovered === label && (
+      <span
+        className={`absolute right-12 top-1/2 transform -translate-y-1/2 bg-${color}-500 text-white px-2 py-1 rounded-lg transition-all duration-300`}
+      >
+        {label}
+      </span>
+    )}
+  </div>
+);
 
 export default PathWidget;
