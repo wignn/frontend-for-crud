@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import FeatureList from "@/app/components/Landing/FeatureList";
-import Contact from "@/app/components/Landing/contact";
 import Hero from "@/app/components/Landing/Hero";
 import Navbar from "@/app/components/Landing/Navbar";
 import BookList from "@/app/components/Book/BookList";
 import { fetchBooks } from "@/lib/action";
+import Footer from "./components/Landing/Footer";
 
 export default function Landing() {
   const [books, setBooks] = useState<any[]>([]);
@@ -52,12 +52,8 @@ export default function Landing() {
     return title.length > maxLength ? title.slice(0, maxLength) + "..." : title;
   };
 
+
   const feature = [
-    {
-      title: "Post",
-      href: "/post",
-      description: "Create and share posts with ease.",
-    },
     {
       title: "Dashboard",
       href: "/dashboard",
@@ -68,15 +64,9 @@ export default function Landing() {
       href: "/profile",
       description: "Manage and customize your profile.",
     },
-    {
-      title: "Message",
-      href: "/GlobalMsg",
-      description: "Connect with others through messages.",
-    },
-    { title: "Admin Dashboard", href: "/admin", description: "Only admin" },
+    { title: "create book", href: "/admin", description: "create book and chapter" },
+    { title: "bookmark", href: "/bookmark", description: "add mark to book" },
   ];
-
-
 
   return (
     <div
@@ -90,14 +80,15 @@ export default function Landing() {
     >
       <Navbar />
       <Hero />
-      <FeatureList className={"bg-gray-900 "} features={feature} />
       <BookList
+      text={"Latest"}
         books={books}
         timeAgo={timeAgo}
         truncateTitle={truncateTitle}
         className={"bg-gray-900 text-white text-center"}
       />
-      <Contact />
+      <FeatureList className={"bg-gray-900 "} features={feature} />
+      <Footer/>
     </div>
   );
 }

@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
             className="h-10 w-10"
           />
           <Link href="/" className="text-xl font-bold">
-            Akasia
+            wignn
           </Link>
         </div>
 

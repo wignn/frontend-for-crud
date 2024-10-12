@@ -1,77 +1,150 @@
-import Link from "next/link";
-import React from "react";
+"use client";
 
-const Hero:React.FC = ()=> {
+import { fetchBooks } from "@/lib/action";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+
+const Hero: React.FC = () => {
+  const [books, setBooks] = useState<{ id: string; title: string; description: string; coverImage: string; }[]>([]);
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const response = await fetchBooks();
+        const data = response.books.slice(0, 3); 
+        setBooks(data);
+      } catch (error) {
+        console.error("Failed to fetch book data:", error);
+      }
+    };
+
+    fetchBook();
+  }, []);
+
   return (
-    <div className="text-white min-h-screen">
-      <section className="md:h-screen h-1/2 flex flex-col items-center justify-center text-center bg-cover bg-center">
-        <h1 className="md:text-5xl text-base font-bold mb-4 drop-shadow-lg">
-          Selamat Datang di tera
+    <div className="min-h-screen bg-gradient-to-b text-white">
+      <section className="h-screen flex flex-col items-center justify-center text-center bg-cover bg-center relative">
+        <h1 className="text-xl md:text-2xl font-bold mb-6 drop-shadow-lg">
+          Selami Dunia Fantasi Tanpa Batas
         </h1>
-        <p className="md:text-2xl text-sm sm:text-lg mb-6 drop-shadow-lg text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 hover:scale-105 transition-transform duration-300">
-          Next.js + Express
-        </p>
+        <p className="text-xl bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent md:text-xl mb-6">
+  next.js + express
+</p>
+
         <Link
-          href="#features"
-          className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white px-6 py-3 rounded-full md:text-lg text-xs mb-2 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 transition"
+          href="#explore"
+          className="bg-blue-600 text-white px-8 py-3 rounded-full text-lg md:text-base mb-6 hover:bg-blue-700 transition"
         >
-          Baca Sekarang
+          Jelajahi Sekarang
         </Link>
       </section>
-      <section
-        id="features"
-        className="md:py-16 gap-2 py-20 md:px-8 px-4 bg-gray-900"
-      >
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-12">
-          Fitur-Fitur Unggulan
+
+      <section id="explore" className="py-16 px-6 bg-gray-900">
+        <h2 className="text-lg md:text-xl font-bold text-center mb-12 text-white">
+          Temukan Cerita yang Tepat untuk Anda
         </h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="text-base grid md:grid-cols-3 grid-cols-2 gap-8">
           <Feature
-            title="Genre Populer"
-            description="Fantasi, Sci-Fi, Drama, dan banyak lagi genre yang siap menemani hari-harimu."
-            icon="/asset/Seducing-the-Student-Council-President.jpg"
+            title="Fantasi dan Petualangan"
+            description="Telusuri dunia sihir, pedang, dan makhluk mitos dalam novel fantasi yang mendebarkan."
+            icon="https://files.edgestore.dev/93ti9i3vqygrxg8l/myPublicImage/_public/3c56e360-0a66-460d-8019-a82d64bf75e1.png"
           />
           <Feature
-            title="Pembaruan Berkala"
-            description="Nikmati bab baru setiap minggu dengan jadwal rilis yang teratur."
-            icon="/asset/Omniscient-FirstPersons-Viewpoint.jpg"
+            title="Romansa dan Drama"
+            description="Cerita-cerita romantis yang akan membuat hatimu berdebar, dengan drama penuh emosi."
+            icon="https://files.edgestore.dev/93ti9i3vqygrxg8l/myPublicImage/_public/9da65fe9-2b72-488b-9eb1-06678897d737.png"
           />
           <Feature
-            title="Akses Gratis"
-            description="Baca gratis atau nikmati keuntungan lebih dengan langganan premium."
-            icon="/asset/121c842eed7d511eff13c323ae5072d2_551458_ori (1).jpg"
+            title="Fiksi Ilmiah"
+            description="Menjelajahi masa depan, teknologi canggih, dan dunia lain dengan cerita fiksi ilmiah."
+            icon="https://files.edgestore.dev/93ti9i3vqygrxg8l/myPublicImage/_public/1a4ec192-9b21-4418-8b96-749ad41f5ddb.jpg"
           />
-          <Feature
-            title="Komunitas Pembaca"
-            description="Diskusikan cerita dan bagikan pendapatmu bersama komunitas penggemar."
-            icon="/asset/Fake-Saint-Of-The-Year.jpg"
-          />
-          <Feature
-            title="Tersedia di Berbagai Format"
-            description="Nikmati dalam bentuk audio book, e-book, atau bahkan cetakan fisik."
-            icon="/asset/Hong.Biyeon.full.4201699.jpg"
-          />
-          <Feature
-            title="Login"
-            description="Nikmati dalam bentuk audio book, e-book, atau bahkan cetakan fisik."
-            icon="/asset/semple.jpg"
-          />
+        </div>
+      </section>
+
+      {!session && (
+        <section className="py-12 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-center">
+          <h3 className="text-3xl font-bold mb-4">
+            Bergabunglah dengan Jutaan Pembaca
+          </h3>
+          <p className="text-lg mb-6">
+            Buat akun gratis untuk akses ke lebih banyak cerita menarik dan
+            fitur eksklusif!
+          </p>
+          <Link
+            href="#signup"
+            className="bg-white text-purple-700 px-8 py-3 rounded-full text-lg md:text-xl hover:bg-gray-200 transition"
+          >
+            Daftar Sekarang
+          </Link>
+        </section>
+      )}
+
+      <section className="py-16 px-6 bg-gray-800">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
+          Novel Terpopuler
+        </h2>
+        <div className="grid md:grid-cols-3 grid-cols-1 gap-8">
+          {books.length > 0 ? (
+            books.map((book) => (
+              <Novel
+                key={book.id}
+                title={book.title}
+                description={book.description}
+                cover={book.coverImage}
+              />
+            ))
+          ) : (
+            <p className="text-center text-white">Sedang memuat buku...</p>
+          )}
         </div>
       </section>
     </div>
   );
-}
+};
 
-function Feature({ title, description, icon }: any) {
+function Feature({
+  title,
+  description,
+  icon,
+}: {
+  title: string;
+  description: string;
+  icon: string;
+}) {
   return (
     <div className="flex flex-col items-center text-center">
-      <div className="md:w-56 w-28 md:h-80 h-40 md:mb-4 mb-2 relative overflow-hidden rounded-lg">
+      <div className="w-24 h-24 mb-4 relative overflow-hidden rounded-full shadow-lg bg-white flex items-center justify-center">
         <img src={icon} alt={title} className="object-cover w-full h-full" />
       </div>
-      <h3 className="md:text-2xl text-xs font-semibold mb-2">{title}</h3>
-      <p className="md:text-lg text-xs hidden md:block">{description}</p>
+      <h3 className="text-xl font-semibold mb-2 text-white">{title}</h3>
+      <p className="text-base text-gray-300">{description}</p>
     </div>
   );
 }
 
-export default Hero
+function Novel({
+  title,
+  description,
+  cover,
+}: {
+  title: string;
+  description: string;
+  cover: string;
+}) {
+  return (
+    <div className="flex flex-col items-center text-center bg-gray-700 p-4 rounded-lg shadow-md">
+      <img
+        src={cover}
+        alt={title}
+        className="w-full h-72 object-cover rounded-lg mb-4"
+      />
+      <h3 className="text-base font-semibold mb-2 text-white">{title}</h3>
+      <p className="text-sm text-gray-300">{description}</p>
+    </div>
+  );
+}
+
+export default Hero;

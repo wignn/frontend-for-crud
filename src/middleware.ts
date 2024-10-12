@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/Login", req.url));
   }
   const AdminDash = req.nextUrl.pathname.startsWith("/admin");
-  if (AdminDash && token?.name !==  "admin" ) {
+  if (AdminDash && !isAuthenticated ) {
     const notFoundPath = "/404"; 
     return NextResponse.redirect(new URL(notFoundPath, req.url));
   }

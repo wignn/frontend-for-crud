@@ -17,13 +17,14 @@ interface BookListProps {
   timeAgo?: any;
   truncateTitle?: any
   className?: any;
+  text: string;
 }
 
-const BookList: React.FC<BookListProps> = ({ books, timeAgo, truncateTitle, className }) => {
+const BookList: React.FC<BookListProps> = ({ text, books, timeAgo, truncateTitle, className }) => {
   return (
     <div className={`bg-gray-800 p-4 sm:p-6 rounded-md shadow-md ${className}`}>
       <h2 className="text-lg sm:text-xl font-bold mb-4 text-gray-200">
-        Daftar Buku
+        {text}
       </h2>
       <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {books.map((book) => (

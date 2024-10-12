@@ -79,7 +79,7 @@ const Dashboard: React.FC<DashboardProps> = ({ query }) => {
         </div> */}
 
         <div className="mt-6">
-          <BookList books={books} />
+          <BookList text={" "} books={books} />
         </div>
       </div>
     </div>
