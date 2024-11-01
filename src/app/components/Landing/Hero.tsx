@@ -63,25 +63,7 @@ const Hero: React.FC = () => {
           />
         </div>
       </section>
-
-      {!session && (
-        <section className="py-12 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-center">
-          <h3 className="text-3xl font-bold mb-4">
-            Bergabunglah dengan Jutaan Pembaca
-          </h3>
-          <p className="text-lg mb-6">
-            Buat akun gratis untuk akses ke lebih banyak cerita menarik dan
-            fitur eksklusif!
-          </p>
-          <Link
-            href="#signup"
-            className="bg-white text-purple-700 px-8 py-3 rounded-full text-lg md:text-xl hover:bg-gray-200 transition"
-          >
-            Daftar Sekarang
-          </Link>
-        </section>
-      )}
-
+      
       <section className="py-16 px-6 bg-gray-800">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
           Novel Terpopuler

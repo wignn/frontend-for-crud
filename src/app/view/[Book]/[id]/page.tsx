@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Loading from "@/app/components/dist/Loading";
+import Loading from "@/app/components/comp/Loading";
 import Navbar from "@/app/components/Landing/Navbar";
 import { getBookById, getChapterById } from "@/lib/action";
 

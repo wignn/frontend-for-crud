@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { SingleImageDropzone } from "@/app/components/dist/image";
+import { SingleImageDropzone } from "@/app/components/comp/image";
 import { useEdgeStore } from "@/lib/edgeStore";
 import { usePathname } from "next/navigation";
 import { editeBook, getBookById } from "@/lib/action";
-import { Bg } from "../dist/bg";
+import { Bg } from "../comp/bg";
 
 interface Form {
   id: string;

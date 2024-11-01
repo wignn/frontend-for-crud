@@ -1,7 +1,7 @@
 "use client";
 import { GetDashboard } from "@/lib/action";
 import React, { useEffect, useState } from "react";
-import Search from "@/app/components/dist/searchBook";
+import Search from "@/app/components/comp/searchBook";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import Link from "next/link";
 import axios from "axios";

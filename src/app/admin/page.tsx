@@ -1,6 +1,6 @@
 import BooksEdite from "@/app/components/admin/Dasboard";
 import SideBar from "@/app/components/admin/SideBar";
-import { Bg } from "../components/dist/bg";
+import { Bg } from "../components/comp/bg";
 
 interface SearchParams {
   query?: string;
@@ -8,7 +8,6 @@ interface SearchParams {
 
 const Page = async ({ searchParams }: { searchParams?: SearchParams }) => {
   const query = searchParams?.query || "";
-  // console.log(`Query: ${query}`);
 
   return (
     <>

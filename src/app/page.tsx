@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import FeatureList from "@/app/components/Landing/FeatureList";
 import Hero from "@/app/components/Landing/Hero";
 import Navbar from "@/app/components/Landing/Navbar";
@@ -8,21 +7,12 @@ import BookList from "@/app/components/Book/BookList";
 import { fetchBooks } from "@/lib/action";
 import Footer from "./components/Landing/Footer";
 
-export default function Landing() {
-  const [books, setBooks] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
-  const getBooks = async () => {
-    const { books, error } = await fetchBooks();
-    if (error) {
-      setError(error);
-    } else {
-      setBooks(books);
-    }
-  };
-  useEffect(() => {
-    getBooks();
-  }, []);
+
+export default async function Landing() {
+    const { books } = await fetchBooks();
+
+  
 
   const timeAgo = (date: string) => {
     const now = new Date();
@@ -82,7 +72,7 @@ export default function Landing() {
       <Hero />
       <BookList
       text={"Latest"}
-        books={books}
+        books={books || []}
         timeAgo={timeAgo}
         truncateTitle={truncateTitle}
         className={"bg-gray-900 text-white text-center"}

@@ -1,4 +1,3 @@
-
 //@ts-nocheck
 "use client";
 
@@ -11,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { API } from "@/lib/Api";
 import { useRouter } from 'next/navigation';
 import { postCover, postProfile } from "@/lib/action";
-import { Bg } from "../dist/bg";
+
 
 interface FileUrls {
   url: string;

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { SessionProvider } from "next-auth/react";
-import PathWidget from "./components/dist/navigation";
+import PathWidget from "./components/comp/navigation";
 
 
 const ClientWrapper = ({ children }: { children: React.ReactNode }) => {

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import Loading from "@/app/components/dist/Loading";
+import Loading from "@/app/components/comp/Loading";
 import Link from "next/link";
 import React from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";

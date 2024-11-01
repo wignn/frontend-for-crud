@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { API } from '@/lib/Api';
 import { getAllGenre } from "@/lib/action";
 
 interface Genre {

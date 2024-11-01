@@ -204,6 +204,7 @@ export const bookMarkConect = async (userId: any, bookId: any) => {
 export const getBookById = async (bookId: string) => {
   try {
     const result = await axios.get(`${API}/books/${bookId}`);
+    console.log(result);
     return result;
   } catch (err) {
     throw new Error("Failed to get book");

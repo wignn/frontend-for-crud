@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { SingleImageDropzone } from "../dist/image";
+import { SingleImageDropzone } from "../comp/image";
 import { useEdgeStore } from "@/lib/edgeStore";
 import { PostBook } from "@/lib/action";
 
