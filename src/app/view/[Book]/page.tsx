@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Navbar from "@/app/components/Landing/Navbar";
 import Loading from "@/app/components/comp/Loading";
-import { getBookById } from "@/lib/action";
+import { getBookById, getProfile } from "@/lib/action";
 
 interface Book {
   id: string;
@@ -20,11 +20,21 @@ interface Book {
   chapters: { id: string; title: string; createdAt: string }[];
 }
 
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  profile: { avatar: string; sampul: string };
+}
+
+
 export default function Books() {
   const pathname = usePathname();
   const bookId = pathname.split("/").pop();
   const [book, setBook] = React.useState<Book | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const  [user, setUser] = React.useState<User>();
   const { data: session } = useSession();
 
   async function fetchBook() {
@@ -32,6 +42,9 @@ export default function Books() {
       setLoading(true);
       console.log(bookId);
       const response = await getBookById(String(bookId));
+      const user = await getProfile(session?.user.id);
+      console.log(user);
+      setUser(user);
       setBook(response.data);
     } catch (err) {
       console.error(err);
@@ -50,7 +63,7 @@ export default function Books() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar user={user!}/>
       <div className="min-h-screen bg-gray-700 text-white p-2 md:p-8">
         {book && (
           <Hero

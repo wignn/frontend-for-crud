@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Loading from "@/app/components/comp/Loading";
 import Navbar from "@/app/components/Landing/Navbar";
-import { getBookById, getChapterById } from "@/lib/action";
+import { getBookById, getChapterById, getProfile } from "@/lib/action";
+import { useSession } from "next-auth/react";
 
 interface Chapter {
   id: string;
@@ -29,6 +30,8 @@ const ChapterContent = () => {
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const [textSize, setTextSize] = useState("text-base");
+  const [user, setUser] = useState(null);
+  const { data: session } = useSession();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -44,8 +47,9 @@ const ChapterContent = () => {
         if (!chapterResponse.data || !chapterResponse.data.book) {
           throw new Error("Chapter or associated book not found.");
         }
-
+        const users = await getProfile(session?.user.id);
         setContent(chapterResponse.data);
+        setUser(users);
         const bookResponse = await getBookById(bookId)
         setBook(bookResponse.data);
       } catch (err) {
@@ -84,7 +88,7 @@ const ChapterContent = () => {
 
   return (
     <div>
-      <Navbar/>
+      <Navbar user={user!}/>
       <div className="flex flex-col items-center min-h-screen bg-gray-900 text-gray-200">
         <div className="w-full mt-10 md:max-w-4xl mx-auto bg-gray-800 text-white rounded-lg shadow-md p-6">
           <div className="flex justify-between items-center mb-4">

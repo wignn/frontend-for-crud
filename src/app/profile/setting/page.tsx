@@ -24,8 +24,7 @@ export default function ProfileSetting() {
       const fetchUserData = async () => {
         try {
           const result = await getProfile(session?.user?.id);
-          setUser(result.data);
-          console.log(result.data);
+          setUser(result);
         } catch (err) {
           console.error("Error fetching user data:", err);
         } finally {
