@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Loading from "@/app/components/comp/Loading";
 import BookmarkList from "@/app/components/Book/bookmark";
-import { API } from '@/lib/Api';
-import axios from "axios";
 import { getBookMark } from "@/lib/action";
 
 interface Bookmark {

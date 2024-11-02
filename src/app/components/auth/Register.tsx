@@ -24,7 +24,7 @@ const Register: React.FC = () => {
     try {
       const response = await register(formData);
       setMessage("Registration successful!");
-      if (response.data === 200) {
+      if (response.status === 200) {
         window.location.href = "/Login";
       }
 

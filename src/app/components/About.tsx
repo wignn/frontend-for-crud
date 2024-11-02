@@ -1,12 +1,14 @@
 import Image from 'next/image'; 
 import img from '../../../public/11233.png';
 import { FaGithub } from 'react-icons/fa';
-import Navbar from './Landing/Navbar';
+import { getProfile } from '@/lib/action';
 
-export function About() {
+
+export async function About() {
+
   return (
     <div>
-      <Navbar/>
+
     <div className="min-h-screen bg-gray-900 text-gray-200 p-10 md:p-20 relative">
       <div className="relative w-full h-96 md:h-screen flex items-center justify-center bg-cover bg-center">
         <Image

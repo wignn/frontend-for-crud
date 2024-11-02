@@ -1,5 +1,5 @@
 import RegisterPage from "../components/auth/Register";
-import { Bg } from "../components/dist/bg";
+import { Bg } from "../components/comp/bg";
 
 export default function Register() {
   return (

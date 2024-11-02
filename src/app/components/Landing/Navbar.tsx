@@ -1,11 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image"; // Import Image dari Next.js
+import Image from "next/image"; 
 import { MenuIcon, XIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { API } from "@/lib/Api";
-import { getProfile } from "@/lib/action";
+
 
 interface User {
   id: number;
@@ -14,25 +12,14 @@ interface User {
   profile: { avatar: string; sampul: string };
 }
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  user: User;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ user }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [user, setUser] = useState<User>();
-  const { data: session } = useSession();
 
-  useEffect(() => {
-    if (session) {
-      const fetchUserData = async () => {
-        try {
-          const response = await getProfile(session?.user?.id);
-          setUser(response.data);
-        } catch (err) {
-          console.error("Error fetching user data:", err);
-        }
-      };
-      fetchUserData();
-    }
-  }, [session, API]);
 
   return (
     <nav className="bg-gray-900 text-white p-4">
@@ -61,14 +48,14 @@ const Navbar: React.FC = () => {
             Novel
           </Link>
           <Link href="/bookmark" className="hover:text-gray-400">
-          bookmark
+            Bookmark
           </Link>
         </div>
 
         {user && (
           <div className="relative z-50">
             <img
-              src={user?.profile.avatar ?? '/about.jpg'}
+              src={user?.profile.avatar }
               alt="Avatar"
               className="hidden md:block h-10 w-10 rounded-full cursor-pointer" 
               onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -79,13 +66,13 @@ const Navbar: React.FC = () => {
                   href="/profile"
                   className="block px-4 py-2 text-sm hover:bg-gray-200"
                 >
-                  {user.name}
+                  {user?.name}
                 </Link>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm hover:bg-gray-200"
                 >
-                  {user.email}
+                  {user?.email}
                 </a>
                 <Link
                   href="/profile/setting"

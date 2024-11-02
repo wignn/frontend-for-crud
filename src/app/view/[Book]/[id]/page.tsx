@@ -58,6 +58,8 @@ const ChapterContent = () => {
     fetchChapterContent();
   }, [pathname]);
 
+  
+
   if (loading) {
     return <Loading />;
   }

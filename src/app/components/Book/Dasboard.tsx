@@ -31,7 +31,6 @@ const DasboardComponet:React.FC = () => {
   const bookId = pathname.split("/").pop();
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
-  const [allGenres, setAllGenres] = useState<Genre[]>([]);
   const [filteredGenres, setFilteredGenres] = useState<Genre[]>([]);
   const [selectedGenreIds, setSelectedGenreIds] = useState<Set<number>>(new Set());
   const [deletingGenreIds, setDeletingGenreIds] = useState<Set<number>>(new Set());
@@ -45,7 +44,6 @@ const DasboardComponet:React.FC = () => {
       setBook(bookResponse.data);
 
       const genreData =await getAllGenre()
-      setAllGenres(genreData.data);
 
       const associatedGenreIds = new Set(bookResponse.data.genre.map((g: Genre) => g.id));
       const availableGenres = genreData.data.filter((g: Genre) => !associatedGenreIds.has(g.id));

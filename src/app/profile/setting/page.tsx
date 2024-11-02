@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import PhotoCard from "../../components/profile/settingProfile";
 import { useSession } from "next-auth/react";
-import Loading from "@/app/components/dist/Loading";
+import Loading from "@/app/components/comp/Loading";
 
 import { getProfile } from "@/lib/action";
-import { Bg } from "@/app/components/dist/bg";
+import { Bg } from "@/app/components/comp/bg";
 
 interface User {
   id: number;
@@ -14,7 +14,7 @@ interface User {
   profile: { avatar: string; sampul: string };
 }
 
-export default function ProfilePage() {
+export default function ProfileSetting() {
   const { data: session } = useSession();
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(true);

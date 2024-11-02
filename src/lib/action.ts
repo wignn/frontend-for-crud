@@ -103,10 +103,10 @@ export const deleteUser = async (userId: number) => {
 };
 
 // Fungsi untuk mendapatkan profil pengguna
-export const getProfile = async (userId: number) => {
+export const getProfile = async (userId: any) => {
   try {
     const result = await axios.get(`${API}/users/${userId}`);
-    return result;
+    return result.data;
   } catch (err) {
     throw new Error("Failed to get profile");
   }
@@ -163,7 +163,9 @@ export const genreCreate = async (genre: any) => {
 // Fungsi untuk mendapatkan bookmark pengguna
 export const getBookMark = async (userId: any) => {
   try {
+    console.log(userId);
     const response = await axios.get(`${API}/bookmarsk/${userId}`);
+
     return response;
   } catch (err) {
     throw new Error("Failed to get bookmarks");
@@ -181,9 +183,11 @@ export const chapterCreat = async (form: any) => {
 };
 
 // Fungsi untuk menghapus bookmark
-export const deleteBookMark = async (userId: any, bookId: any) => {
+export const deleteBookMark = async (userId: number, bookId: string) => {
   try {
+    
     const result = await axios.delete(`${API}/bookmark/delete/${userId}/${bookId}`);
+    console.log(result.status +"status delete");
     return result;
   } catch (err) {
     throw new Error("Failed to delete bookmark");
@@ -191,9 +195,11 @@ export const deleteBookMark = async (userId: any, bookId: any) => {
 };
 
 // Fungsi untuk menghubungkan bookmark
-export const bookMarkConect = async (userId: any, bookId: any) => {
+export const bookMarkConect = async (userId: any, bookId: string) => {
   try {
-    const response = await axios.post(`${API}/bookmark/create`, { userId, bookId });
+
+    const response = await axios.post<{ data: any }>(`${API}/bookmark/create`, { userId: parseInt(userId, 10), bookId });
+
     return response;
   } catch (err) {
     throw new Error("Failed to connect bookmark");
@@ -238,6 +244,7 @@ export const genreConect = async (bookId: string, selectedGenreIds: any) => {
 export const getChapterById = async (chapterId: string) => {
   try {
     const result = await axios.get(`${API}/chapter/${chapterId}`);
+    console.log(result.data);
     return result;
   } catch (err) {
     throw new Error("Failed to get chapter.");

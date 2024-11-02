@@ -1,5 +1,5 @@
 import LoginForm from "../components/auth/LoginForm";
-import { Bg } from "../components/dist/bg";
+import { Bg } from "../components/comp/bg";
 
 export default function Login (){
 

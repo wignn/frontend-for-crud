@@ -1,9 +1,8 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PhotoCard from "../components/profile/ProfileCard";
-import axios from "axios";
 import { useSession } from "next-auth/react";
-import Loading from "@/app/components/dist/Loading";
+import Loading from "@/app/components/comp/Loading";
 
 import { getProfile } from "@/lib/action";
 
@@ -24,7 +23,7 @@ export default function ProfilePage() {
       const fetchUserData = async () => {
         try {
           const result = await getProfile(session?.user?.id);
-          setUser(result.data);
+          setUser(result);
           console.log(result.data);
         } catch (err) {
           console.error("Error fetching user data:", err);

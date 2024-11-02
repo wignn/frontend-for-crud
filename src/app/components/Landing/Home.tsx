@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import Loading from "../dist/Loading";
+import Loading from "../comp/Loading";
 import { useSession } from "next-auth/react";
 import { API } from "@/lib/Api";
 import { GetAllUser } from "@/lib/action";

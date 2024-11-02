@@ -23,8 +23,8 @@ interface DashboardProps {
 
 const BooksEdite: React.FC<DashboardProps> = ({ query }) => {
   const [books, setBooks] = useState<Book[]>([]);
-  const genre = ""; // Dapat diperluas untuk mendukung filtering berdasarkan genre
-
+  const genre = ""; 
+  
   const fetchBooks = async () => {
     const result = await GetDashboard(query, genre);
     setBooks(result);

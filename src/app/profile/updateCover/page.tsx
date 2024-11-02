@@ -1,6 +1,6 @@
-import Image from "next/image";
+
 import { UpdateCover } from "@/app/components/profile/UpdateProfileImage";
-import { Bg } from "@/app/components/dist/bg";
+import { Bg } from "@/app/components/comp/bg";
 
 export default function Page() {
   return (

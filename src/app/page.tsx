@@ -1,47 +1,17 @@
-"use client";
-
 import FeatureList from "@/app/components/Landing/FeatureList";
 import Hero from "@/app/components/Landing/Hero";
 import Navbar from "@/app/components/Landing/Navbar";
 import BookList from "@/app/components/Book/BookList";
-import { fetchBooks } from "@/lib/action";
-import Footer from "./components/Landing/Footer";
-
-
+import { fetchBooks, getProfile } from "@/lib/action";
+import Footer from "@/app/components/Landing/Footer";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export default async function Landing() {
-    const { books } = await fetchBooks();
-
-  
-
-  const timeAgo = (date: string) => {
-    const now = new Date();
-    const updatedDate = new Date(date);
-    const differenceInSeconds = Math.floor(
-      (now.getTime() - updatedDate.getTime()) / 1000
-    );
-
-    const intervals: { [key: string]: number } = {
-      year: 31536000,
-      month: 2592000,
-      day: 86400,
-      hour: 3600,
-      minute: 60,
-      second: 1,
-    };
-
-    for (const [unit, seconds] of Object.entries(intervals)) {
-      const interval = Math.floor(differenceInSeconds / seconds);
-      if (interval > 1) return `${interval} ${unit}s ago`;
-      if (interval === 1) return `1 ${unit} ago`;
-    }
-    return "just now";
-  };
-
-  const truncateTitle = (title: string, maxLength: number) => {
-    return title.length > maxLength ? title.slice(0, maxLength) + "..." : title;
-  };
-
+  const fetchedBooks = await fetchBooks();
+  const books = fetchedBooks.books;
+  const session = await getServerSession(authOptions);
+  const user = await getProfile(session?.user.id);
 
   const feature = [
     {
@@ -54,8 +24,16 @@ export default async function Landing() {
       href: "/profile",
       description: "Manage and customize your profile.",
     },
-    { title: "create book", href: "/admin", description: "create book and chapter" },
-    { title: "bookmark", href: "/bookmark", description: "add mark to book" },
+    {
+      title: "Create Book",
+      href: "/admin",
+      description: "Create books and chapters.",
+    },
+    {
+      title: "Bookmark",
+      href: "/bookmark",
+      description: "Add bookmarks to books.",
+    },
   ];
 
   return (
@@ -67,18 +45,26 @@ export default async function Landing() {
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
       }}
+      className="text-white"
     >
-      <Navbar />
-      <Hero />
-      <BookList
-      text={"Latest"}
-        books={books || []}
-        timeAgo={timeAgo}
-        truncateTitle={truncateTitle}
-        className={"bg-gray-900 text-white text-center"}
-      />
-      <FeatureList className={"bg-gray-900 "} features={feature} />
-      <Footer/>
+      <Navbar user={user}/>
+      <div className="bg-gray-900 bg-opacity-60 min-h-screen">
+        <Hero />
+        <div className="">
+          <BookList
+            text="Latest"
+            books={books}
+            className="bg-gray-800 text-white text-center rounded-lg shadow-lg p-8"
+          />
+        </div>
+        <div className="">
+          <FeatureList
+            className="bg-gray-800 text-white text-center rounded-lg shadow-lg p-8"
+            features={feature}
+          />
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

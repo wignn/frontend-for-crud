@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Hero from "../../components/Book/HeroBook";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -17,19 +17,20 @@ interface Book {
   publishedAt: string;
   status: string;
   genre: { id: string; name: string }[];
-  chapters?: { id: string; title: string }[];
+  chapters: { id: string; title: string; createdAt: string }[];
 }
 
 export default function Books() {
   const pathname = usePathname();
   const bookId = pathname.split("/").pop();
   const [book, setBook] = React.useState<Book | null>(null);
-  const { data: session } = useSession();
   const [loading, setLoading] = React.useState(true);
+  const { data: session } = useSession();
 
   async function fetchBook() {
     try {
       setLoading(true);
+      console.log(bookId);
       const response = await getBookById(String(bookId));
       setBook(response.data);
     } catch (err) {
@@ -39,9 +40,9 @@ export default function Books() {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchBook();
-  }, [session?.user.name, bookId]);
+  }, [bookId]);
 
   if (loading) {
     return <Loading />;
@@ -49,10 +50,12 @@ export default function Books() {
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="min-h-screen bg-gray-700 text-white p-2 md:p-8">
         {book && (
           <Hero
+            bookId={book.id}
+            userId={session?.user?.id || null}
             cover={book.coverImage}
             description={book.synopsis}
             title={book.title}
