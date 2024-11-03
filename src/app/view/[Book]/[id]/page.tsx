@@ -47,9 +47,11 @@ const ChapterContent = () => {
         if (!chapterResponse.data || !chapterResponse.data.book) {
           throw new Error("Chapter or associated book not found.");
         }
-        const users = await getProfile(session?.user.id);
+        if(session?.user.id){
+          const users = await getProfile(session?.user.id);
+          setUser(users);
+        }
         setContent(chapterResponse.data);
-        setUser(users);
         const bookResponse = await getBookById(bookId)
         setBook(bookResponse.data);
       } catch (err) {
