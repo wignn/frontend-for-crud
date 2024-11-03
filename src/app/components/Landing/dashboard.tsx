@@ -1,11 +1,13 @@
 "use client";
 
-import { GetDashboard } from "@/lib/action";
+import { GetDashboard, getProfile } from "@/lib/action";
 import Search from "../comp/searchBook";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import BookList from "../Book/BookList"; 
 import GenreSelector from "../Book/genreSelect"; 
+import { useSession } from "next-auth/react";
+
 
 interface Book {
   id: string;
@@ -24,8 +26,15 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ query }) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [genre, setGenre] = useState("");
+  const { data: session } = useSession();
+  const [user, setUser] = useState();
 
   const fetchBooks = async () => {
+    if (session?.user.id) {
+      const user =await getProfile(session?.user.id);
+      setUser(user);
+    }
+   
     const fetchedBooks: Book[] = await GetDashboard(query, genre);
     setBooks(fetchedBooks);
   };
@@ -40,7 +49,7 @@ const Dashboard: React.FC<DashboardProps> = ({ query }) => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200">
-      <Navbar />
+      <Navbar user={user!}/>
       <div className="p-4 sm:p-8">
         <header className="flex justify-between items-center bg-gray-800 p-4 sm:p-6 rounded-md shadow-lg mb-6">
           <h1 className="text-xl sm:text-2xl font-bold text-white">
