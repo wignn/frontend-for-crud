@@ -38,14 +38,8 @@ export default function Books() {
   async function fetchBook() {
     try {
       setLoading(true);
-      console.log(bookId);
+      const user = await getProfile(session?.user.id);
       const response = await getBookById(String(bookId));
-      if (session?.user.id) {
-        const user = await getProfile(session?.user.id);
-        setUser(user);
-      }
-
-      console.log(response.data + "ini response");
       setUser(user);
       setBook(response.data);
     } catch (err) {

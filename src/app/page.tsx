@@ -10,12 +10,10 @@ import { authOptions } from "@/lib/auth";
 export default async function Landing() {
   const fetchedBooks = await fetchBooks();
   const books = fetchedBooks.books;
-let user
 
   const session = await getServerSession(authOptions);
-  if(session) {
-    user = await getProfile(session?.user.id);
-  }
+  const user = session?.user.id ? await getProfile(session.user.id) : null;
+
 
 
   const feature = [
