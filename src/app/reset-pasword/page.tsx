@@ -1,4 +1,4 @@
-import { Bg } from '../components/dist/bg'
+import { Bg } from '../components/comp/bg'
 import InputEmailForm from './emailFrorm'
 
 

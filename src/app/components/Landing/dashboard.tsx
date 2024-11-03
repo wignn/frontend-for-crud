@@ -1,7 +1,7 @@
 "use client";
 
 import { GetDashboard } from "@/lib/action";
-import Search from "../dist/searchBook";
+import Search from "../comp/searchBook";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import BookList from "../Book/BookList"; 

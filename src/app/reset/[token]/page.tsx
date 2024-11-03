@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { resetPassword } from "@/lib/action";
-import { Bg } from "@/app/components/dist/bg";
+import { Bg } from "@/app/components/comp/bg";
 
 
 

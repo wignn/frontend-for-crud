@@ -7,7 +7,7 @@ interface ChaptersPageProps {
 
 const ChaptersPage: React.FC<ChaptersPageProps> = ({ chapters, bookId }) => {
   return (
-      <div className="w-full max-w-2xl bg-gray-800 rounded-lg shadow-xl p-6">
+      <div className="w-full  bg-gray-800 rounded-lg shadow-xl p-6">
         <h3 className="text-2xl font-semibold text-white mb-4 text-center">
           {chapters.length === 0 ? "No Chapters Available" : `${chapters.length} Chapters`}
         </h3>

@@ -1,13 +1,11 @@
 "use client";
 
 import { fetchBooks } from "@/lib/action";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Hero: React.FC = () => {
   const [books, setBooks] = useState<{ id: string; title: string; description: string; coverImage: string; }[]>([]);
-  const { data: session } = useSession();
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -29,9 +27,6 @@ const Hero: React.FC = () => {
         <h1 className="text-xl md:text-2xl font-bold mb-6 drop-shadow-lg">
           Selami Dunia Fantasi Tanpa Batas
         </h1>
-        <p className="text-xl bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent md:text-xl mb-6">
-  next.js + express
-</p>
 
         <Link
           href="#explore"

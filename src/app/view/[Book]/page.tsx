@@ -20,7 +20,6 @@ interface Book {
   chapters: { id: string; title: string; createdAt: string }[];
 }
 
-
 interface User {
   id: number;
   name: string;
@@ -28,13 +27,12 @@ interface User {
   profile: { avatar: string; sampul: string };
 }
 
-
 export default function Books() {
   const pathname = usePathname();
   const bookId = pathname.split("/").pop();
   const [book, setBook] = React.useState<Book | null>(null);
   const [loading, setLoading] = React.useState(true);
-  const  [user, setUser] = React.useState<User>();
+  const [user, setUser] = React.useState<User>();
   const { data: session } = useSession();
 
   async function fetchBook() {
@@ -42,8 +40,12 @@ export default function Books() {
       setLoading(true);
       console.log(bookId);
       const response = await getBookById(String(bookId));
-      const user = await getProfile(session?.user.id);
-      console.log(user);
+      if (session?.user.id) {
+        const user = await getProfile(session?.user.id);
+        setUser(user);
+      }
+
+      console.log(response.data + "ini response");
       setUser(user);
       setBook(response.data);
     } catch (err) {
@@ -55,7 +57,7 @@ export default function Books() {
 
   useEffect(() => {
     fetchBook();
-  }, [bookId]);
+  }, [bookId, session?.user.id]);
 
   if (loading) {
     return <Loading />;
@@ -63,7 +65,7 @@ export default function Books() {
 
   return (
     <div>
-      <Navbar user={user!}/>
+      <Navbar user={user!} />
       <div className="min-h-screen bg-gray-700 text-white p-2 md:p-8">
         {book && (
           <Hero
