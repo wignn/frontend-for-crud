@@ -10,6 +10,11 @@ export async function middleware(req: NextRequest) {
   if (isLoginPage && isAuthenticated) {
     return NextResponse.redirect(new URL("/profile", req.url));
   }
+
+  const bookMark = req.nextUrl.pathname.startsWith("/bookmark");
+  if (bookMark && !isAuthenticated) {
+    return NextResponse.redirect(new URL("/Login", req.url));
+  }
   const isProfilePage = req.nextUrl.pathname.startsWith("/profile");
   if (isProfilePage && !isAuthenticated) {
     return NextResponse.redirect(new URL("/Login", req.url));

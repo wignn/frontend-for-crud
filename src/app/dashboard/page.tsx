@@ -7,7 +7,7 @@ interface SearchParams {
 
 const Dash = async ({ searchParams }: { searchParams?: SearchParams }) => {
   const query = searchParams?.query || "";
-  // console.log(`Query: ${query}`);
+
 
   return (
     <div>

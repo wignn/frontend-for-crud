@@ -17,8 +17,6 @@ interface Bookmark {
   };
 }
 
-
-
 const BookMark: React.FC = () => {
   const { data: session, status } = useSession();
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
@@ -27,13 +25,15 @@ const BookMark: React.FC = () => {
   const fetchBookmarks = async () => {
     setLoading(true);
     try {
+      if (!session?.user?.id) return;
       const response = await getBookMark(session?.user?.id);
-      console.log(response)
+      console.log(response);
       setBookmarks(response.data);
     } catch (error) {
       console.error("Error fetching bookmarks:", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -43,11 +43,15 @@ const BookMark: React.FC = () => {
   }, [session, status]);
 
   const handleDelete = () => {
-    fetchBookmarks(); 
+    fetchBookmarks();
   };
 
   if (loading) {
-    return <div className="w-full h-full"><Loading /></div>;
+    return (
+      <div className="w-full h-full">
+        <Loading />
+      </div>
+    );
   }
 
   if (bookmarks.length === 0) {
@@ -59,19 +63,17 @@ const BookMark: React.FC = () => {
   }
 
   return (
-    <div className="flex justify-center py-10" style={{
-      backgroundImage: `url('/bg.jpg')`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      backgroundAttachment: "fixed",
-    }}>
-      <div className="w-11/12 sm:w-4/5 md:py-6 md:px-8 py-4 px-4 rounded-lg shadow-lg">
-        <h1 className="text-xl sm:text-3xl font-bold mb-6 text-center text-white">
-          Bookmarks
-        </h1>
-        <BookmarkList bookmarks={bookmarks} onDelete={handleDelete} />
-      </div>
+    <div
+      className="flex justify-center py-10"
+      style={{
+        backgroundImage: `url('/bg.jpg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <BookmarkList bookmarks={bookmarks} onDelete={handleDelete} />
     </div>
   );
 };
