@@ -1,4 +1,4 @@
-import { FaUserFriends, FaEnvelope, FaEdit } from 'react-icons/fa';
+import { FaEnvelope, FaEdit } from 'react-icons/fa';
 import Link from 'next/link';
 
 

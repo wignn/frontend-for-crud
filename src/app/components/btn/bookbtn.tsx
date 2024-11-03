@@ -1,6 +1,5 @@
 "use client";
 
-import axios from 'axios';
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
@@ -114,6 +113,7 @@ export const DeleteButton = ({ bookId, onDelete, className }: { bookId: string; 
   const handleDelete = async () => {
     setLoading(true);
     try {
+      if(!session?.user?.id) return;
       await deleteBookMark(session?.user?.id, bookId)
       onDelete();
     } catch (error) {
