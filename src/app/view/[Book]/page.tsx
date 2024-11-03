@@ -38,7 +38,7 @@ export default function Books() {
   async function fetchBook() {
     try {
       setLoading(true);
-      const user = await getProfile(session?.user.id);
+      const user = session?.user.id ? await getProfile(session.user.id) : null;
       const response = await getBookById(String(bookId));
       setUser(user);
       setBook(response.data);

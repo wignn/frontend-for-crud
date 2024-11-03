@@ -37,22 +37,24 @@ const ChapterContent = () => {
 
   const pathParts = pathname.split("/").filter((part) => part);
   const chapterId = pathParts[2];
-  const bookId = pathParts[1]
+  const bookId = pathParts[1];
 
   useEffect(() => {
     const fetchChapterContent = async () => {
       try {
-        const chapterResponse = await getChapterById(chapterId)
+        const chapterResponse = await getChapterById(chapterId);
 
         if (!chapterResponse.data || !chapterResponse.data.book) {
           throw new Error("Chapter or associated book not found.");
         }
-        if(session?.user.id){
-          const users = await getProfile(session?.user.id);
-          setUser(users);
-        }
+        const user = session?.user.id
+          ? await getProfile(session.user.id)
+          : null;
+
+        setUser(user);
+
         setContent(chapterResponse.data);
-        const bookResponse = await getBookById(bookId)
+        const bookResponse = await getBookById(bookId);
         setBook(bookResponse.data);
       } catch (err) {
         console.error("Gagal memuat konten chapter:");
@@ -63,8 +65,6 @@ const ChapterContent = () => {
 
     fetchChapterContent();
   }, [pathname]);
-
-  
 
   if (loading) {
     return <Loading />;
@@ -77,9 +77,7 @@ const ChapterContent = () => {
   }
 
   if (!content.content) {
-    return (
-      <div className="text-yellow-500">Konten chapter kosong.</div>
-    );
+    return <div className="text-yellow-500">Konten chapter kosong.</div>;
   }
 
   const currentChapterIndex = book.chapters.findIndex(
@@ -90,7 +88,7 @@ const ChapterContent = () => {
 
   return (
     <div>
-      <Navbar user={user!}/>
+      <Navbar user={user!} />
       <div className="flex flex-col items-center min-h-screen bg-gray-900 text-gray-200">
         <div className="w-full mt-10 md:max-w-4xl mx-auto bg-gray-800 text-white rounded-lg shadow-md p-6">
           <div className="flex justify-between items-center mb-4">
@@ -116,7 +114,9 @@ const ChapterContent = () => {
             {prevChapter && (
               <div className="flex-1 text-left">
                 <button
-                  onClick={() => router.push(`/view/${book.id}/${prevChapter.id}`)}
+                  onClick={() =>
+                    router.push(`/view/${book.id}/${prevChapter.id}`)
+                  }
                   className="bg-gradient-to-l from-gray-600 to-gray-700 text-white px-4 py-2 rounded hover:bg-gradient-to-r hover:from-gray-500 hover:to-gray-600 transition duration-200"
                 >
                   Prev Chapter
@@ -126,7 +126,9 @@ const ChapterContent = () => {
             {nextChapter && (
               <div className="flex-1 text-right">
                 <button
-                  onClick={() => router.push(`/view/${book.id}/${nextChapter.id}`)}
+                  onClick={() =>
+                    router.push(`/view/${book.id}/${nextChapter.id}`)
+                  }
                   className="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-4 py-2 rounded hover:bg-gradient-to-l hover:from-gray-500 hover:to-gray-600 transition duration-200"
                 >
                   Next Chapter
