@@ -14,7 +14,7 @@ interface FileUrls {
   url: string;
 }
 interface BookCreateProps {
-  className?: string; 
+  className?: string;
 }
 
 const BookCreate: React.FC<BookCreateProps> = ({ className }) => {
@@ -29,6 +29,7 @@ const BookCreate: React.FC<BookCreateProps> = ({ className }) => {
   const [imageUrl, setImageUrl] = useState<FileUrls>();
   const [progress, setProgress] = useState(0);
   const [success, setSuccess] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     const uploadUrlsToDatabase = async () => {
@@ -138,8 +139,9 @@ const BookCreate: React.FC<BookCreateProps> = ({ className }) => {
         <button
           type="submit"
           className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors mt-4"
+          disabled={isUploading}
         >
-          Submit
+          {isUploading ? "Loading..." : "Submit"}
         </button>
       </form>
       <label className="mb-2 mt-4">Image</label>
@@ -173,7 +175,6 @@ const BookCreate: React.FC<BookCreateProps> = ({ className }) => {
         </div>
       )}
       {success && <p className="text-green-500 mt-4">{success}</p>}{" "}
-      {/* Menampilkan pesan sukses */}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import Image from "next/image";
 import ChaptersPage from "./chapter";
 import { FaBell, FaBookmark } from "react-icons/fa";
 import { bookMarkConect, deleteBookMark, getBookMark } from "@/lib/action";
+import Link from "next/link";
 
 interface TagsProps {
   bookId: string;
@@ -39,7 +40,9 @@ const Hero: React.FC<TagsProps> = ({
         const response = await getBookMark(userId);
         const bookMarked = response.data;
         setIsBookmarked(
-          bookMarked.some((bookmark: { bookId: string }) => bookmark.bookId === bookId)
+          bookMarked.some(
+            (bookmark: { bookId: string }) => bookmark.bookId === bookId
+          )
         );
       } catch (error) {
         console.error("Failed to fetch bookmark", error);
@@ -94,9 +97,11 @@ const Hero: React.FC<TagsProps> = ({
             </button>
           </div>
         )}
-        <button className="w-full mt-4 py-2 px-4 text-white bg-green-600 hover:bg-green-500 rounded-lg transition-all">
-          Read
-        </button>
+        <Link href={`/view/${bookId}/${chapters[0]?.id}`}>
+          <button className="w-full mt-4 py-2 px-4 text-white bg-green-600 hover:bg-green-500 rounded-lg transition-all">
+            Read
+          </button>
+        </Link>
       </div>
 
       <div className="w-full md:w-2/3 space-y-6">
@@ -106,7 +111,7 @@ const Hero: React.FC<TagsProps> = ({
 
         <div className="flex flex-wrap justify-between text-gray-300 text-sm sm:text-base">
           <span className="font-semibold">{author}</span>
-          <span>{createdAt}</span>
+          <span>{new Date(createdAt).toLocaleDateString()}</span>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -133,7 +138,6 @@ const Hero: React.FC<TagsProps> = ({
             {isExpanded ? "Show Less" : "Show More"}
           </button>
         </div>
-
         <ChaptersPage chapters={chapters} bookId={bookId} />
       </div>
     </div>
